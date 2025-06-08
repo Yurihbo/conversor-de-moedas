@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conversor de Moedas</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ffd700" />
+  <link rel="icon" href="icons/favicon.png" type="image/png" />
+
+</head>
+<body>
+  <div class="main-layout">
+    <!-- Coluna da esquerda: conversor e histórico -->
+    <div class="container">
+      <h1>Conversor de Moedas</h1>
+
+      <div class="converter">
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" placeholder="Digite o valor" />
+
+        <div class="select-wrapper">
+          <div class="select-moeda">
+            <img class="bandeira" id="bandeiraOrigem" src="https://flagcdn.com/us.svg" alt="USD">
+            <select id="moedaOrigem">
+<option value="USD" data-flag="us">USD - Dólar Americano</option>
+<option value="EUR" data-flag="eu">EUR - Euro</option>
+<option value="BRL" data-flag="br">BRL - Real Brasileiro</option>
+<option value="GBP" data-flag="gb">GBP - Libra Esterlina</option>
+<option value="JPY" data-flag="jp">JPY - Iene Japonês</option>
+<option value="AUD" data-flag="au">AUD - Dólar Australiano</option>
+<option value="CAD" data-flag="ca">CAD - Dólar Canadense</option>
+<option value="CHF" data-flag="ch">CHF - Franco Suíço</option>
+<option value="ARS" data-flag="ar">ARS - Peso Argentino</option>
+<option value="CNY" data-flag="cn">CNY - Yuan Chinês</option>
+<option value="INR" data-flag="in">INR - Rupia Indiana</option>
+<option value="MXN" data-flag="mx">MXN - Peso Mexicano</option>
+<option value="ZAR" data-flag="za">ZAR - Rand Sul-Africano</option>
+<option value="KRW" data-flag="kr">KRW - Won Sul-Coreano</option>
+<option value="RUB" data-flag="ru">RUB - Rublo Russo</option>
+<option value="SEK" data-flag="se">SEK - Coroa Sueca</option>
+<option value="NOK" data-flag="no">NOK - Coroa Norueguesa</option>
+<option value="DKK" data-flag="dk">DKK - Coroa Dinamarquesa</option>
+<option value="PLN" data-flag="pl">PLN - Zlóti Polonês</option>
+<option value="TRY" data-flag="tr">TRY - Lira Turca</option>
+<option value="EGP" data-flag="eg">EGP - Libra Egípcia</option>
+<option value="IDR" data-flag="id">IDR - Rupia Indonésia</option>
+<option value="PKR" data-flag="pk">PKR - Rupia Paquistanesa</option>
+<option value="BDT" data-flag="bd">BDT - Taka de Bangladesh</option>
+<option value="NGN" data-flag="ng">NGN - Naira Nigeriana</option>
+<option value="VND" data-flag="vn">VND - Dong Vietnamita</option>
+<option value="THB" data-flag="th">THB - Baht Tailandês</option>
+<option value="PHP" data-flag="ph">PHP - Peso Filipino</option>
+<option value="NZD" data-flag="nz">NZD - Dólar Neozelandês</option>
+<option value="UAH" data-flag="ua">UAH - Hryvnia Ucraniana</option>
+<option value="ILS" data-flag="il">ILS - Shekel Israelense</option>
+<option value="SAR" data-flag="sa">SAR - Rial Saudita</option>
+<option value="AED" data-flag="ae">AED - Dirham Emiradense</option>
+<option value="CLP" data-flag="cl">CLP - Peso Chileno</option>
+<option value="COP" data-flag="co">COP - Peso Colombiano</option>
+<option value="PEN" data-flag="pe">PEN - Sol Peruano</option>
+</select>
+</div>
+        <button id="inverterMoedas" title="Inverter moedas">⟲</button>
+        <div class="select-moeda">
+        <img class="bandeira" id="bandeiraDestino" src="https://flagcdn.com/br.svg" alt="BRL">
+        <select id="moedaDestino">
+<option value="BRL" data-flag="br">BRL - Real Brasileiro</option>
+<option value="USD" data-flag="us">USD - Dólar Americano</option>
+<option value="EUR" data-flag="eu">EUR - Euro</option>
+<option value="GBP" data-flag="gb">GBP - Libra Esterlina</option>
+<option value="JPY" data-flag="jp">JPY - Iene Japonês</option>
+<option value="AUD" data-flag="au">AUD - Dólar Australiano</option>
+<option value="CAD" data-flag="ca">CAD - Dólar Canadense</option>
+<option value="CHF" data-flag="ch">CHF - Franco Suíço</option>
+<option value="ARS" data-flag="ar">ARS - Peso Argentino</option>
+<option value="CNY" data-flag="cn">CNY - Yuan Chinês</option>
+<option value="INR" data-flag="in">INR - Rupia Indiana</option>
+<option value="MXN" data-flag="mx">MXN - Peso Mexicano</option>
+<option value="ZAR" data-flag="za">ZAR - Rand Sul-Africano</option>
+<option value="KRW" data-flag="kr">KRW - Won Sul-Coreano</option>
+<option value="RUB" data-flag="ru">RUB - Rublo Russo</option>
+<option value="SEK" data-flag="se">SEK - Coroa Sueca</option>
+<option value="NOK" data-flag="no">NOK - Coroa Norueguesa</option>
+<option value="DKK" data-flag="dk">DKK - Coroa Dinamarquesa</option>
+<option value="PLN" data-flag="pl">PLN - Zlóti Polonês</option>
+<option value="TRY" data-flag="tr">TRY - Lira Turca</option>
+<option value="EGP" data-flag="eg">EGP - Libra Egípcia</option>
+<option value="IDR" data-flag="id">IDR - Rupia Indonésia</option>
+<option value="PKR" data-flag="pk">PKR - Rupia Paquistanesa</option>
+<option value="BDT" data-flag="bd">BDT - Taka de Bangladesh</option>
+<option value="NGN" data-flag="ng">NGN - Naira Nigeriana</option>
+<option value="VND" data-flag="vn">VND - Dong Vietnamita</option>
+<option value="THB" data-flag="th">THB - Baht Tailandês</option>
+<option value="PHP" data-flag="ph">PHP - Peso Filipino</option>
+<option value="NZD" data-flag="nz">NZD - Dólar Neozelandês</option>
+<option value="UAH" data-flag="ua">UAH - Hryvnia Ucraniana</option>
+<option value="ILS" data-flag="il">ILS - Shekel Israelense</option>
+<option value="SAR" data-flag="sa">SAR - Rial Saudita</option>
+<option value="AED" data-flag="ae">AED - Dirham Emiradense</option>
+<option value="CLP" data-flag="cl">CLP - Peso Chileno</option>
+<option value="COP" data-flag="co">COP - Peso Colombiano</option>
+<option value="PEN" data-flag="pe">PEN - Sol Peruano</option>
+
+            </select>
+          </div>
+        </div>
+
+        <div id="resultado" class="resultado"></div>
+      </div>
+
+      <h2>Histórico de Conversões</h2>
+      <ul id="historico"></ul>
+
+      <h2> Selecione um país no mapa</h2>
+      <div id="mapaMoeda" style="height: 400px; border-radius: 12px; margin-top: 10px;"></div>
+    </div>
+
+    <!-- Coluna da direita: gráfico -->
+    <div class="grafico-container">
+      <h2>Variação da Cotação</h2>
+
+      <label for="intervaloDias" style="display: block; margin-bottom: 8px; text-align: left; width: 100%;">
+        
+        Período do gráfico:
+      </label>
+      <select id="intervaloDias" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 8px;">
+        <option value="7">Últimos 7 dias</option>
+        <option value="30">Últimos 30 dias</option>
+        <option value="90">Últimos 90 dias</option>
+      </select>
+
+      
+<div id="wrapperAlternarGrafico" style="display: none;">
+  <button id="alternarTipoGrafico" style="margin-bottom: 10px; padding: 8px 12px; background-color: #ffd700; color: black; border: none; border-radius: 6px; cursor: pointer;">
+    Alternar Gráfico
+  </button>
+</div>
+
+<canvas id="grafico" width="400" height="300"></canvas>
+      <!-- Notícias Econômicas -->
+      <div class="noticias-container">
+        <h2><span class="emoji-animada">📰</span> Notícias Econômicas</h2>
+        <ul id="listaNoticias"></ul>
+      </div>      
+    </div>
+  </div>
+  
+  <button id="instalarApp" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 16px;
+  background-color: #ffd700;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px #0006;
+  display: none;
+  z-index: 9999;
+">📲 Instalar App</button>
+
+<script src="script.js"></script>
+<div class="filtro-escuro"></div>
+
+  </body>
+</html>
