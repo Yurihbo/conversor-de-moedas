@@ -363,7 +363,7 @@ function inicializarMapa() {
 
 async function carregarNoticiasEconomicas() {
   const API_KEY = "fb436b32aea609cb70701da2bc1d9942";
-  const url = `https://gnews.io/api/v4/search?q=moeda%20OR%20câmbio%20OR%20dólar&lang=pt&token=${API_KEY}`;
+  const url = `https://corsproxy.io/?https://gnews.io/api/v4/search?q=moeda%20câmbio%20dólar&lang=pt&token=${API_KEY}`;
 
   try {
     const res = await fetch(url);
