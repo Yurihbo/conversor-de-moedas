@@ -363,7 +363,7 @@ function inicializarMapa() {
 
 async function carregarNoticiasEconomicas() {
 
-  const url = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=moeda+cambio+dolar&hl=pt-BR&gl=BR&ceid=BR:pt";
+  const url = `https://corsproxy.io/?https://gnews.io/api/v4/search?q=moeda%20OR%20c%C3%A2mbio%20OR%20d%C3%B3lar&lang=pt&token=${API_KEY}`;
 
   try {
 
