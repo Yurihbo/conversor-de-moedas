@@ -363,7 +363,7 @@ function inicializarMapa() {
 
 async function carregarNoticiasEconomicas() {
 
-  const url = `https://corsproxy.io/?https://gnews.io/api/v4/search?q=moeda%20OR%20c%C3%A2mbio%20OR%20d%C3%B3lar&lang=pt&token=${API_KEY}`;
+  const url = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=moeda+cambio+dolar&hl=pt-BR&gl=BR&ceid=BR:pt";
 
   try {
 
@@ -373,29 +373,18 @@ async function carregarNoticiasEconomicas() {
     const lista = document.getElementById("listaNoticias");
     lista.innerHTML = "";
 
-    if (data.items && data.items.length > 0) {
+    data.items.slice(0,5).forEach(noticia => {
 
-      data.items.slice(0,5).forEach(noticia => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${noticia.link}" target="_blank">${noticia.title}</a>`;
+      lista.appendChild(li);
 
-        const li = document.createElement("li");
-
-        li.innerHTML = `<a href="${noticia.link}" target="_blank">${noticia.title}</a>`;
-
-        lista.appendChild(li);
-
-      });
-
-    } else {
-
-      lista.innerHTML = "<li>Nenhuma notícia encontrada.</li>";
-
-    }
+    });
 
   } catch (error) {
-
     console.error("Erro ao carregar notícias:", error);
-
   }
+
 }
 
 let deferredPrompt;
