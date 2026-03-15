@@ -362,29 +362,41 @@ function inicializarMapa() {
 }
 
 async function carregarNoticiasEconomicas() {
-
-  const url = "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=moeda+cambio+dolar&hl=pt-BR&gl=BR&ceid=BR:pt";
+  const lista = document.getElementById("listaNoticias");
+  lista.innerHTML = "<li>Carregando notícias...</li>";
 
   try {
+    const API_KEY = "fb436b32aea609cb70701da2bc1d9942";
 
-    const res = await fetch(url);
-    const data = await res.json();
+    const response = await fetch(
+      `https://gnews.io/api/v4/search?q=economia OR dólar OR câmbio&lang=pt&max=6&token=${API_KEY}`
+    );
 
-    const lista = document.getElementById("listaNoticias");
+    const data = await response.json();
+
     lista.innerHTML = "";
 
-    data.items.slice(0,5).forEach(noticia => {
+    if (!data.articles || data.articles.length === 0) {
+      lista.innerHTML = "<li>Nenhuma notícia encontrada.</li>";
+      return;
+    }
 
+    data.articles.forEach(noticia => {
       const li = document.createElement("li");
-      li.innerHTML = `<a href="${noticia.link}" target="_blank">${noticia.title}</a>`;
-      lista.appendChild(li);
 
+      li.innerHTML = `
+        <a href="${noticia.url}" target="_blank">
+          ${noticia.title}
+        </a>
+      `;
+
+      lista.appendChild(li);
     });
 
-  } catch (error) {
-    console.error("Erro ao carregar notícias:", error);
+  } catch (erro) {
+    console.error("Erro ao carregar notícias:", erro);
+    lista.innerHTML = "<li>Erro ao carregar notícias.</li>";
   }
-
 }
 
 let deferredPrompt;
