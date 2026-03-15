@@ -23,19 +23,17 @@ async function detectarMoedaUsuario() {
 
     if (moedaUsuario && selectOrigem.querySelector(`option[value="${moedaUsuario}"]`)) {
 
+      // moeda local vira a origem
       selectOrigem.value = moedaUsuario;
 
+      // destino padrão vira USD
       selectDestino.value = "USD";
 
       selectOrigem.dispatchEvent(new Event("change"));
       selectDestino.dispatchEvent(new Event("change"));
 
       converter();
-
-  } catch (erro) {
-    console.warn("Não foi possível detectar a moeda do usuário", erro);
-  }
-}
+    }
 
   } catch (erro) {
     console.warn("Não foi possível detectar a moeda do usuário", erro);
