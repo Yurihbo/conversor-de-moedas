@@ -31,7 +31,6 @@ async function detectarMoedaUsuario() {
       selectDestino.dispatchEvent(new Event("change"));
 
       converter();
-    }
 
   } catch (erro) {
     console.warn("Não foi possível detectar a moeda do usuário", erro);
