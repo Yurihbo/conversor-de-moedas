@@ -18,12 +18,25 @@ async function detectarMoedaUsuario() {
 
     const moedaUsuario = data.currency;
 
+    const selectOrigem = document.getElementById("moedaOrigem");
     const selectDestino = document.getElementById("moedaDestino");
 
-    if (moedaUsuario && selectDestino.querySelector(`option[value="${moedaUsuario}"]`)) {
-      selectDestino.value = moedaUsuario;
+    if (moedaUsuario && selectOrigem.querySelector(`option[value="${moedaUsuario}"]`)) {
+
+      selectOrigem.value = moedaUsuario;
+
+      selectDestino.value = "USD";
+
+      selectOrigem.dispatchEvent(new Event("change"));
       selectDestino.dispatchEvent(new Event("change"));
+
+      converter();
     }
+
+  } catch (erro) {
+    console.warn("Não foi possível detectar a moeda do usuário", erro);
+  }
+}
 
   } catch (erro) {
     console.warn("Não foi possível detectar a moeda do usuário", erro);
