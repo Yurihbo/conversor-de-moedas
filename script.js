@@ -362,20 +362,25 @@ function inicializarMapa() {
 }
 
 async function carregarNoticiasEconomicas() {
+
   const lista = document.getElementById("listaNoticias");
 
   try {
 
     const API_KEY = "fb436b32aea609cb70701da2bc1d9942";
 
-    const url = `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/search?q=economia OR dólar OR câmbio&lang=pt&max=6&token=${API_KEY}`;
+    const apiUrl = `https://gnews.io/api/v4/search?q=economia OR dólar OR câmbio&lang=pt&max=6&token=${API_KEY}`;
+
+    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
+    console.log("Resposta da API:", data);
+
     lista.innerHTML = "";
 
-    if (!data.articles) {
+    if (!data.articles || data.articles.length === 0) {
       lista.innerHTML = "<li>Nenhuma notícia encontrada</li>";
       return;
     }
