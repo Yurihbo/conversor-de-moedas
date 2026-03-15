@@ -55,6 +55,7 @@ async function converter() {
     adicionarAoHistorico(valor, origem, convertido, destino);
     carregarGrafico(origem, destino, intervaloAtual);
     mostrarVariacaoDiaria(origem, destino, taxa);
+    carregarNoticiasEconomicas();
   } catch (error) {
     resultado.textContent = "Erro ao converter.";
     resultado.classList.add("erro");
@@ -368,22 +369,29 @@ async function carregarNoticiasEconomicas() {
 
   try {
 
-    const idioma = navigator.language || "en";
+    const origem = document.getElementById("moedaOrigem").value;
+    const destino = document.getElementById("moedaDestino").value;
 
-    let rss;
+    const temas = {
+      USD: "US economy",
+      EUR: "European economy",
+      BRL: "Brazil economy",
+      JPY: "Japan economy",
+      GBP: "UK economy",
+      CNY: "China economy",
+      AUD: "Australia economy",
+      CAD: "Canada economy",
+      CHF: "Swiss economy",
+      INR: "India economy",
+      RUB: "Russia economy"
+    };
 
-    if (idioma.startsWith("pt")) {
-      rss = "https://pt.euronews.com/rss?level=theme&name=business";
-    } 
-    else if (idioma.startsWith("es")) {
-      rss = "https://rss.elpais.com/rss/economia.xml";
-    } 
-    else if (idioma.startsWith("fr")) {
-      rss = "https://www.lemonde.fr/economie/rss_full.xml";
-    } 
-    else {
-      rss = "https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml";
-    }
+    const buscaOrigem = temas[origem] || "global economy";
+    const buscaDestino = temas[destino] || "global economy";
+
+    const busca = `${buscaOrigem} OR ${buscaDestino}`;
+
+    const rss = `https://news.google.com/rss/search?q=${encodeURIComponent(busca)}`;
 
     const response = await fetch(
       `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`
@@ -398,7 +406,7 @@ async function carregarNoticiasEconomicas() {
       return;
     }
 
-    data.items.slice(0,6).forEach(noticia => {
+    data.items.slice(0, 6).forEach(noticia => {
 
       const li = document.createElement("li");
 
