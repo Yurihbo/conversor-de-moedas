@@ -373,7 +373,7 @@ async function carregarNoticiasEconomicas() {
     let rss;
 
     if (idioma.startsWith("pt")) {
-      rss = "https://www.infomoney.com.br/feed/";
+      rss = "https://feeds.bbci.co.uk/portuguese/business/rss.xml";
     } 
     else if (idioma.startsWith("es")) {
       rss = "https://rss.elpais.com/rss/economia.xml";
@@ -398,7 +398,7 @@ async function carregarNoticiasEconomicas() {
       return;
     }
 
-    data.items.slice(0, 6).forEach(noticia => {
+    data.items.slice(0,6).forEach(noticia => {
 
       const li = document.createElement("li");
 
