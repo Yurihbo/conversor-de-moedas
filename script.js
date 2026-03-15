@@ -373,7 +373,7 @@ async function carregarNoticiasEconomicas() {
     let rss;
 
     if (idioma.startsWith("pt")) {
-      rss = "https://feeds.bbci.co.uk/portuguese/business/rss.xml";
+      rss = "https://pt.euronews.com/rss?level=theme&name=business";
     } 
     else if (idioma.startsWith("es")) {
       rss = "https://rss.elpais.com/rss/economia.xml";
