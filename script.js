@@ -380,18 +380,15 @@ async function carregarNoticiasEconomicas() {
       GBP: "UK economy",
       CNY: "China economy",
       AUD: "Australia economy",
-      CAD: "Canada economy",
-      CHF: "Swiss economy",
-      INR: "India economy",
-      RUB: "Russia economy"
+      CAD: "Canada economy"
     };
 
-    const buscaOrigem = temas[origem] || "global economy";
-    const buscaDestino = temas[destino] || "global economy";
+    const busca = `${temas[origem] || "global economy"} OR ${temas[destino] || "global economy"}`;
 
-    const busca = `${buscaOrigem} OR ${buscaDestino}`;
+    const idioma = navigator.language || "en-US";
+    const pais = idioma.split("-")[1] || "US";
 
-    const rss = `https://news.google.com/rss/search?q=${encodeURIComponent(busca)}`;
+    const rss = `https://news.google.com/rss/search?q=${encodeURIComponent(busca)}&hl=${idioma}&gl=${pais}&ceid=${pais}:${idioma.split("-")[0]}`;
 
     const response = await fetch(
       `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`
@@ -401,12 +398,33 @@ async function carregarNoticiasEconomicas() {
 
     lista.innerHTML = "";
 
-    if (!data.items || data.items.length === 0) {
-      lista.innerHTML = "<li>Nenhuma notícia encontrada</li>";
+    const palavrasFinanceiras = [
+      "economy",
+      "inflation",
+      "interest",
+      "central bank",
+      "fed",
+      "market",
+      "currency",
+      "trade",
+      "gdp",
+      "recession",
+      "stocks",
+      "bonds"
+    ];
+
+    const noticiasFiltradas = data.items.filter(noticia =>
+      palavrasFinanceiras.some(p =>
+        noticia.title.toLowerCase().includes(p)
+      )
+    );
+
+    if (noticiasFiltradas.length === 0) {
+      lista.innerHTML = "<li>Nenhuma notícia relevante encontrada</li>";
       return;
     }
 
-    data.items.slice(0, 6).forEach(noticia => {
+    noticiasFiltradas.slice(0, 6).forEach(noticia => {
 
       const li = document.createElement("li");
 
