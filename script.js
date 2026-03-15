@@ -368,9 +368,27 @@ async function carregarNoticiasEconomicas() {
 
   try {
 
-    const rss = "https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml";
+    const idioma = navigator.language || "en";
 
-    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`);
+    let rss;
+
+    if (idioma.startsWith("pt")) {
+      rss = "https://www.infomoney.com.br/feed/";
+    } 
+    else if (idioma.startsWith("es")) {
+      rss = "https://rss.elpais.com/rss/economia.xml";
+    } 
+    else if (idioma.startsWith("fr")) {
+      rss = "https://www.lemonde.fr/economie/rss_full.xml";
+    } 
+    else {
+      rss = "https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml";
+    }
+
+    const response = await fetch(
+      `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`
+    );
+
     const data = await response.json();
 
     lista.innerHTML = "";
@@ -380,7 +398,7 @@ async function carregarNoticiasEconomicas() {
       return;
     }
 
-    data.items.slice(0,6).forEach(noticia => {
+    data.items.slice(0, 6).forEach(noticia => {
 
       const li = document.createElement("li");
 
