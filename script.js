@@ -11,6 +11,25 @@ function debounce(fn, delay = 500) {
   };
 }
 
+async function detectarMoedaUsuario() {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    const moedaUsuario = data.currency;
+
+    const selectDestino = document.getElementById("moedaDestino");
+
+    if (moedaUsuario && selectDestino.querySelector(`option[value="${moedaUsuario}"]`)) {
+      selectDestino.value = moedaUsuario;
+      selectDestino.dispatchEvent(new Event("change"));
+    }
+
+  } catch (erro) {
+    console.warn("Não foi possível detectar a moeda do usuário", erro);
+  }
+}
+
 async function converter() {
   const valor = parseFloat(document.getElementById("valor").value);
   const origem = document.getElementById("moedaOrigem").value;
@@ -269,6 +288,7 @@ carregarHistoricoSalvo();
 ativarConversaoAutomatica();
 ativarSeletorIntervalo();
 ativarBotaoInverter();
+detectarMoedaUsuario();
 
 function inicializarMapa() {
   if (window._mapaInstanciado) return;
