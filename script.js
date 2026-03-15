@@ -374,14 +374,16 @@ async function carregarNoticiasEconomicas() {
 
     const data = await response.json();
 
+    console.log("Resposta da API:", data);
+
     lista.innerHTML = "";
 
-    if (!data.articles || data.articles.length === 0) {
-      lista.innerHTML = "<li>Nenhuma notícia encontrada.</li>";
+    if (!data || !data.articles) {
+      lista.innerHTML = "<li>Nenhuma notícia disponível.</li>";
       return;
     }
 
-    data.articles.forEach(noticia => {
+    data.articles.slice(0, 6).forEach(noticia => {
       const li = document.createElement("li");
 
       li.innerHTML = `
