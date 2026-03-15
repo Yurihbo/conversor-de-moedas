@@ -371,12 +371,9 @@ async function carregarNoticiasEconomicas() {
 
     const apiUrl = `https://gnews.io/api/v4/search?q=economia OR dólar OR câmbio&lang=pt&max=6&token=${API_KEY}`;
 
-    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
+    const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(apiUrl)}`);
 
-    const response = await fetch(url);
     const data = await response.json();
-
-    console.log("Resposta da API:", data);
 
     lista.innerHTML = "";
 
