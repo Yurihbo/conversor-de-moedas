@@ -363,27 +363,25 @@ function inicializarMapa() {
 
 async function carregarNoticiasEconomicas() {
   const lista = document.getElementById("listaNoticias");
-  lista.innerHTML = "<li>Carregando notícias...</li>";
 
   try {
+
     const API_KEY = "fb436b32aea609cb70701da2bc1d9942";
 
-    const response = await fetch(
-      `https://gnews.io/api/v4/search?q=economia OR dólar OR câmbio&lang=pt&max=6&token=${API_KEY}`
-    );
+    const url = `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/search?q=economia OR dólar OR câmbio&lang=pt&max=6&token=${API_KEY}`;
 
+    const response = await fetch(url);
     const data = await response.json();
-
-    console.log("Resposta da API:", data);
 
     lista.innerHTML = "";
 
-    if (!data || !data.articles) {
-      lista.innerHTML = "<li>Nenhuma notícia disponível.</li>";
+    if (!data.articles) {
+      lista.innerHTML = "<li>Nenhuma notícia encontrada</li>";
       return;
     }
 
-    data.articles.slice(0, 6).forEach(noticia => {
+    data.articles.forEach(noticia => {
+
       const li = document.createElement("li");
 
       li.innerHTML = `
@@ -393,11 +391,14 @@ async function carregarNoticiasEconomicas() {
       `;
 
       lista.appendChild(li);
+
     });
 
   } catch (erro) {
+
     console.error("Erro ao carregar notícias:", erro);
-    lista.innerHTML = "<li>Erro ao carregar notícias.</li>";
+    lista.innerHTML = "<li>Erro ao carregar notícias</li>";
+
   }
 }
 
