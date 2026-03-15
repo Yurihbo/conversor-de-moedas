@@ -41,11 +41,6 @@ async function detectarMoedaUsuario() {
   }
 }
 
-  } catch (erro) {
-    console.warn("Não foi possível detectar a moeda do usuário", erro);
-  }
-}
-
 async function converter() {
   const valor = parseFloat(document.getElementById("valor").value);
   const origem = document.getElementById("moedaOrigem").value;
