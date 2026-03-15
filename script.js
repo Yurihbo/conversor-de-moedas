@@ -13,6 +13,7 @@ function debounce(fn, delay = 500) {
 
 async function detectarMoedaUsuario() {
   try {
+
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
 
@@ -23,17 +24,22 @@ async function detectarMoedaUsuario() {
 
     if (moedaUsuario && selectOrigem.querySelector(`option[value="${moedaUsuario}"]`)) {
 
-      // moeda local vira a origem
       selectOrigem.value = moedaUsuario;
-
-      // destino padrão vira USD
       selectDestino.value = "USD";
 
       selectOrigem.dispatchEvent(new Event("change"));
       selectDestino.dispatchEvent(new Event("change"));
 
       converter();
+
+      // 🔹 carregar notícias automaticamente já no idioma correto
+      carregarNoticiasEconomicas(moedaUsuario, "USD");
     }
+
+  } catch (erro) {
+    console.warn("Não foi possível detectar a moeda do usuário", erro);
+  }
+}
 
   } catch (erro) {
     console.warn("Não foi possível detectar a moeda do usuário", erro);
@@ -507,8 +513,7 @@ window.addEventListener("appinstalled", () => {
   if (btn) btn.style.display = "none";
 });
 
-// Carregar notícias ao abrir o site
-window.addEventListener("load", carregarNoticiasEconomicas);
+
 
 window.addEventListener("load", inicializarMapa);
 
