@@ -369,7 +369,7 @@ async function carregarNoticiasEconomicas() {
     const API_KEY = "fb436b32aea609cb70701da2bc1d9942";
 
     const response = await fetch(
-      `https://gnews.io/api/v4/search?q=economia OR dólar OR câmbio&lang=pt&max=6&token=${fb436b32aea609cb70701da2bc1d9942}`
+      `https://gnews.io/api/v4/search?q=economia OR dólar OR câmbio&lang=pt&max=6&token=${API_KEY}`
     );
 
     const data = await response.json();
